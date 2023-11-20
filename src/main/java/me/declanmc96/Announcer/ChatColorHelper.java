@@ -6,10 +6,8 @@ public class ChatColorHelper
 {
   public static String replaceColorCodes(String message)
   {
-    for (ChatColor color : ChatColor.values()) {
-      message = message.replaceAll(String.format("&%c", new Object[] { Character.valueOf(color.getChar()) }), color.toString());
-    }
- 
+	  message=ChatColor.translateAlternateColorCodes('&', message);
+	  message= Formatter.formatnp(message);
     return message;
   }
 }

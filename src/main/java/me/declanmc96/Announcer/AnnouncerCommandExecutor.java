@@ -26,7 +26,6 @@ implements CommandExecutor
             success = onVersionCommand(sender, command, label, args);
         }
         else if ("update".equalsIgnoreCase(args[0])){
-            plugin.update();
             success = true;
         }
         else

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
  
-import me.declanmc96.Announcer.metrics.Metrics;
- 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.PluginCommand;
@@ -20,7 +18,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
  
-import me.thundergemios10.updater.Updater;
  
 public class Announcer extends JavaPlugin implements Listener
 {
@@ -45,24 +42,6 @@ public class Announcer extends JavaPlugin implements Listener
  
     public void onEnable() {
         this.logger = getServer().getLogger();
- 
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException e) {
-            // Failed to submit the stats :-(
-        }
-        if(getConfig().getBoolean("announcement.check-for-updates")){
-            Updater updater = new Updater(this, "deckerz-announcer", this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false); // Start Updater but just do a version check
-            update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE; // Determine if there is an update ready for us
-            name = updater.getLatestVersionString(); // Get the latest version
-            size = updater.getFileSize(); // Get latest size
-            if(update && getConfig().getBoolean("announcement.auto-update")){
-                Updater update = new Updater(this, "deckerz-announcer", this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-            }else if(update){
-                getServer().getLogger().log(Level.WARNING, "There is an update for announcer!");
-            }
-        }
  
  
         if (!new File(getDataFolder(), "config.yml").exists()) {
@@ -202,7 +181,4 @@ public class Announcer extends JavaPlugin implements Listener
         saveConfiguration();
     }
  
-    public void update() {
-        Updater updater = new Updater(this, "deckerz-announcer", this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-    }
 }
